@@ -1,0 +1,6 @@
+
+cycler
+matplotlib
+numpy
+pandas
+scipy
