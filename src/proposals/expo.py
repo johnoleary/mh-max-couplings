@@ -1,8 +1,4 @@
-
-import random
 import numpy as np
-import scipy as sp
-from numpy.linalg import norm
 from scipy import stats as stats
 
 # need:

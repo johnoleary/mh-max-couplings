@@ -1,10 +1,12 @@
 
-import time
 import hashlib
+import time
+
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 from numpy.linalg import norm
+
 
 class Recorder(object):
     # record initialization, updating, and output methods

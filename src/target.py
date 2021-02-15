@@ -1,8 +1,10 @@
 
 import random
+
 import numpy as np
 from numpy.linalg import norm
 from scipy import stats as stats
+
 
 class NormalTarget(object):
     def __init__(self, d, sigma2=None, Sigma=None, Sigma_inv=None):
