@@ -272,7 +272,7 @@ class FullKernel(object):
         return max(0, r_xy_xp - r_yx_yp)
 
     def _draw_kernel_res(self, x_curr, y_curr):
-        '''Algorithm 3 in Guanyang Wang's note, for full max indep coupling'''
+        """Algorithm 3 in Guanyang Wang's note, for full max indep coupling"""
         accept = False
         while not accept:
             y_prop, y_acc, y_next = self._iter1x_step(y_curr)
@@ -285,7 +285,7 @@ class FullKernel(object):
                 return y_prop
 
     def _draw_kernel_trans_res(self, x_curr, y_curr, trans_mode='refl'):
-        '''Algorithm 5 in Guanyang's note'''
+        """Algorithm 5 in Guanyang's note"""
         accept = False
         while not accept:
             y_prop, y_acc, y_next = self._iter1x_step(y_curr)
@@ -300,7 +300,7 @@ class FullKernel(object):
                 return y_next
 
     def _iter2x_full_max_indep(self, x_curr, y_curr):
-        '''Algorithm 4 in Guanyang Wang's note'''
+        """Algorithm 4 in Guanyang Wang's note"""
         x_prop = self.prop1x(x_curr)
         log_u = np.log(stats.uniform.rvs())
         x_acc = (log_u <= self._log_acc_ratio(x_curr, x_prop))
@@ -322,7 +322,7 @@ class FullKernel(object):
         return x_next, y_next, True, True, x_next, y_next
 
     def _iter2x_full_max_trans(self, x_curr, y_curr, trans_mode='refl'):
-        '''Algorithm 6 in Guanyang Wang's note'''
+        """Algorithm 6 in Guanyang Wang's note"""
 
         # Step 1. sample x' ~ P(x,.)
         x_prop, x_acc, x_next = self._iter1x_step(x_curr)
@@ -566,9 +566,9 @@ class CoupledMH(FullKernel, Recorder):
 
     # Coupled iteration
     def _iter2x_step(self, x_curr, y_curr):
-        '''one step under the usual method of drawing from a coupled proposal and
+        """one step under the usual method of drawing from a coupled proposal and
         then a coupled accept/reject step
-        '''
+        """
         if np.allclose(x_curr, y_curr):
             x_prop, x_acc, x_next = y_prop, y_acc, y_next = self._iter1x_step(x_curr)
         else:

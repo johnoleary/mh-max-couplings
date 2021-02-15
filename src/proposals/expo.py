@@ -5,7 +5,7 @@ from scipy import stats as stats
 #   attributes: mode, d
 #   methods: log_q_for_ar, log_prop1x_density, prop1x, prop2x
 
-class ExpoProposal():
+class ExpoProposal(object):
     def __init__(self, prop_mode, loc=1, scale=1, flip=True, **kwargs):
         self.d = 1
         self.flip = flip
@@ -28,7 +28,7 @@ class ExpoProposal():
             self.prop2x = self.prop2x_max_indep
 
         # full kernel couplings
-        elif prop_mode in ('full_max_indep'):
+        elif prop_mode == 'full_max_indep':
             self.prop2x = None
 
         else:
@@ -46,7 +46,7 @@ class ExpoProposal():
                                                          scale=self.scale, size=1)
         return x_prop
 
-    def prop2x_indep(self, x_curr, y_curr):
+    def prop2x_indep(self, x_curr):
         x_prop = x_curr + self.fl_coef * stats.expon.rvs(loc=self.fl_coef*self.loc,
                                                          scale=self.scale, size=1)
         y_prop = x_curr + self.fl_coef * stats.expon.rvs(loc=self.fl_coef*self.loc,
@@ -60,12 +60,13 @@ class ExpoProposal():
         y_prop = y_curr + diff
         return x_prop, y_prop
 
+    # noinspection DuplicatedCode
     def prop2x_max_indep(self, x_curr, y_curr):
         x_prop = self.prop1x(x_curr)
         log_q_x_xp = self.log_prop1x_density(x_curr, x_prop)
         log_q_y_xp = self.log_prop1x_density(y_curr, x_prop)
         log_u = np.log(stats.uniform.rvs())
-        if (log_q_x_xp + log_u <= log_q_y_xp):
+        if log_q_x_xp + log_u <= log_q_y_xp:
             return x_prop, x_prop
         else:
             accept = False
@@ -74,6 +75,6 @@ class ExpoProposal():
                 log_q_x_yp = self.log_prop1x_density(x_curr, y_prop)
                 log_q_y_yp = self.log_prop1x_density(y_curr, y_prop)
                 log_v = np.log(stats.uniform.rvs())
-                if (log_q_y_yp + log_v > log_q_x_yp):
+                if log_q_y_yp + log_v > log_q_x_yp:
                     accept = True
             return x_prop, y_prop

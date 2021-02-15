@@ -5,7 +5,7 @@ class Proposal(object):
         log_q_x_xp = self.log_prop1x_density(x_curr, x_prop)
         log_q_y_xp = self.log_prop1x_density(y_curr, x_prop)
         log_u = np.log(stats.uniform.rvs())
-        if (log_q_x_xp + log_u <= log_q_y_xp):
+        if log_q_x_xp + log_u <= log_q_y_xp:
             return x_prop, x_prop
         else:
             accept = False
@@ -14,6 +14,6 @@ class Proposal(object):
                 log_q_x_yp = self.log_prop1x_density(x_curr, y_prop)
                 log_q_y_yp = self.log_prop1x_density(y_curr, y_prop)
                 log_v = np.log(stats.uniform.rvs())
-                if (log_q_y_yp + log_v > log_q_x_yp):
+                if log_q_y_yp + log_v > log_q_x_yp:
                     accept = True
             return x_prop, y_prop

@@ -1,9 +1,9 @@
 
 cycler
 kalepy
-matplotlib:3.3.4
+matplotlib
 multiprocess
-numpy:1.20.1
-pandas:1.2.2
+numpy
+pandas
 scipy
 

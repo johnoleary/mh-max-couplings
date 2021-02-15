@@ -61,18 +61,18 @@ class NormalMaxCoupling(object):
     def max_indep_1d(self, mu0, mu1, sigma):
         draw0, part0 = self._max1d(mu0, mu1, sigma)
         if part0 == 'meet':
-            return (draw0, draw0)
+            return draw0, draw0
         else:
             draw1, part1 = self._max1d_parts(mu1, mu0, sigma, 'resid')
-            return (draw0, draw1)
+            return draw0, draw1
 
     def max_refl_1d(self, mu0, mu1, sigma):
         draw0, part0 = self._max1d(mu0, mu1, sigma)
         if part0 == 'meet':
-            return (draw0, draw0)
+            return draw0, draw0
         else:
             draw1 = mu0 + mu1 - draw0
-            return (draw0, draw1)
+            return draw0, draw1
 
     def _resid_pdf(self, x, mu0, mu1, sigma):
         F0 = lambda x: self.norm_cdf(x, mu0, sigma)
@@ -116,11 +116,11 @@ class NormalMaxCoupling(object):
     def max_ot_1d(self, mu0, mu1, sigma):
         draw0, part0 = self._max1d(mu0, mu1, sigma)
         if part0 == 'meet':
-            return (draw0, draw0)
+            return draw0, draw0
         else:
             p = self._resid_cdf(draw0, mu0, mu1, sigma)
             draw1 = self._resid_ppf(p, mu1, mu0, sigma)
-            return (draw0, draw1)
+            return draw0, draw1
 
     @staticmethod
     def _make_e(x, y):
@@ -229,7 +229,7 @@ class NormalProposal(NormalMaxCoupling):
         else:
             raise ValueError('Proposal mode not supported')
 
-    def log_q_for_ar(self, x_from, x_to):
+    def log_q_for_ar(self):
         return 1. #use constant for a symmetric kernel
 
     def prop1x(self, x_curr):
@@ -379,7 +379,7 @@ class MetropGibbsProposal(NormalMaxCoupling):
         else:
             raise ValueError('Proposal mode not supported')
 
-    def log_q_for_ar(self, x_from, x_to):
+    def log_q_for_ar(self):
         return 1. #use constant for a symmetric kernel
 
     def log_prop1x_density(self, x_curr, x_next):
