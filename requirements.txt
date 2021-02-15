@@ -1,6 +1,8 @@
 
 cycler
+kalepy
 matplotlib
+multiprocess
 numpy
 pandas
 scipy
