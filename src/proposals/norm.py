@@ -229,7 +229,7 @@ class NormalProposal(NormalMaxCoupling):
         else:
             raise ValueError('Proposal mode not supported')
 
-    def log_q_for_ar(self):
+    def log_q_for_ar(self, x_from, x_to):
         return 1. #use constant for a symmetric kernel
 
     def prop1x(self, x_curr):
@@ -379,7 +379,7 @@ class MetropGibbsProposal(NormalMaxCoupling):
         else:
             raise ValueError('Proposal mode not supported')
 
-    def log_q_for_ar(self):
+    def log_q_for_ar(self, x_from, x_to):
         return 1. #use constant for a symmetric kernel
 
     def log_prop1x_density(self, x_curr, x_next):
