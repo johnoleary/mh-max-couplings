@@ -9,7 +9,34 @@ from numpy.linalg import norm
 
 
 class Recorder(object):
-    # record initialization, updating, and output methods
+    """
+    Initializes, updates, and outputs recorded data from an MCMC run.
+
+    Note:
+        All atributes below are lists over the full history of the chain. They are recorded or not depending
+        on the settings given in the initialization of the mcmc run.
+
+    Attributes:
+        x_chain (list): the full state of the x chain
+        y_chain (list): the full state of the y chain
+        x_chain_acc (list): realized acceptance or rejection on the x chain
+        y_chain_acc (list): realized acceptance or rejection on the x chain
+        prob_x_list (list): probability of acceptance on the x chain
+        prob_y_list (list): probability of acceptance on the y chain
+        r_curr_list (list): r = ||y - x|| at the current iteration
+        r_next_list (list): R = ||Y - X|| at the next iteration
+        nmet_curr_list (list): # dimensions in which x==y at the current iteration
+        nmet_next_list (list): # dimensions in which X==Y at the next iteration
+        m_curr_list (list): ||m|| = ||x + y||/2 at the current iteration
+        m_next_list (list): ||M|| = ||X + Y||/2 at the next iteration
+        m1_curr_list (list): |m_1| = |e'm| at the current iteration, for e = (y-x)/r
+        m1_next_list (list): |M_1| = |E'M| at the next iteration, for E = (Y-X)/R
+        xi1_list (list): xi_1 = xi'e for xi = x - (x proposal)
+        ar_choice_list (list): what accept reject mode was chosen? for conditional a/r methods
+        try_count_list (list): number of tries required to get a valid move, for constrained move type runs
+        area_curr_list (list): area of paralellogram with sides x and y at the current iteration
+        area_next_list (list): area of paralellogram with sides x and y at the current iteration
+    """
 
     def _init_record(self):
         #record_items = self.record_items
@@ -47,11 +74,8 @@ class Recorder(object):
         # try counts when there is a required pattern
         self.try_count_list = [np.nan]
 
-        # what does this do?
+        # ?
         self.eps_r_list, self.eps_r_half_list = [np.nan], [np.nan]
-
-        # acceptance scenario probabilities
-        # self.prob_one_list, self.prob_both_list = [np.nan], [np.nan]
 
         # area of the parallelogram with sides x,y
         self.area_curr_list, self.area_next_list = [np.nan], [np.nan]
@@ -210,6 +234,11 @@ class Recorder(object):
         self.result_dict = out
 
     def return_df(self):
+        """
+        Organizes MCMC run results into dataframe.
+
+        Returns: DataFrame with requested results
+        """
         df = pd.concat(pd.DataFrame(res) for res in self.rep_result_list)
 
         if 'accrej' in self.record_items:
@@ -238,8 +267,6 @@ class Recorder(object):
 
 
 class FullKernel(object):
-    # full kernel functions
-
     def _transport_fn(self, x_curr, y_curr, x_next, trans_mode):
         if trans_mode=='refl':
             r_curr = norm(y_curr - x_curr)
