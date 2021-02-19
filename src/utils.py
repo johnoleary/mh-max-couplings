@@ -2,12 +2,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from cycler import cycler
+from types import ModuleType
 
 
 # Pandas configuration
 
-def configure_pd(pd):
-    """Configure pandas for display"""
+def configure_pd(pd: ModuleType) -> None:
+    """
+    Configures pandas for nice display in Jupyter notebooks.
+
+    Args:
+        pd: an instance of the pandas module.
+
+    Returns:
+        None
+
+    """
     pd.options.display.precision = 3
     pd.options.display.max_rows = 100
     pd.options.display.max_columns = 200
@@ -24,8 +34,18 @@ col_list = [dark_blue, dark_red, 'forestgreen', 'goldenrod', 'purple', 'coral',
             'deeppink', 'lightskyblue', 'mistyrose', 'palegreen', 'navajowhite']
 
 
-def configure_plt(plt, figsc=1.):
-    """Set pyplot rcParams for attractive output"""
+def configure_plt(plt: ModuleType, figsc: float = 1.) -> None:
+    """
+    Sets pyplot rcParams for attractive output.
+
+    Args:
+        plt: an instance of the matplotlib.pyplot module
+        figsc (optional): a scale factor for making output images larger or smaller
+
+    Returns:
+        None
+    """
+
     plt_options = {'axes.grid': True,
                    'axes.axisbelow': True,
                    'figure.facecolor': 'white',
@@ -42,8 +62,18 @@ def configure_plt(plt, figsc=1.):
 
 # Other useful functions
 
-def abline(intercept=0, slope=1):
-    """Plot a line from slope and intercept, as in R"""
+def abline(intercept: float = 0., slope: float = 1) -> None:
+    """
+    Plots a line from slope and intercept, as in R.
+
+    Args:
+        intercept: a float giving the y intercept of the line to be plotted
+        slope: a float giving the slope of the line to be plotted
+
+    Returns:
+        None
+    """
+
     axes = plt.gca()
     xlim = axes.get_xlim()
     ylim = axes.get_ylim()
@@ -59,15 +89,34 @@ def abline(intercept=0, slope=1):
 # MCMC setup helper
 
 def add_iter(par_list):
+    """
+    Adds iteration number and total number of iterations to parameter list for use by module mcmc.
+
+    Args:
+        par_list: parameter list object
+
+    Returns:
+        list: parameter list with iteration # and total iterations added
+    """
     for i, p in enumerate(par_list):
         p['i'] = i
         p['i_total'] = len(par_list)
     return par_list
 
 
-# Covariance matrix generation - todo: migrate this to where its used
+# Covariance matrix generation
 
-def make_weakcov(d, rho):
+def make_weakcov(d: int, rho: float):
+    """
+    Creates covariance matrix with ij entry rho^|i-j|.
+
+    Args:
+        d: dimension of the space.
+        rho: correlation parameter.
+
+    Returns:
+        tuple of ndarray: d x d covariance matrix and its inverse.
+    """
     cov_mtx = np.zeros((d, d))
     for i in range(d):
         for j in range(d):
