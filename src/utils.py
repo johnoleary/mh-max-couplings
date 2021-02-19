@@ -1,13 +1,11 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
 from cycler import cycler
-from types import ModuleType
 
 
 # Pandas configuration
 
-def configure_pd(pd: ModuleType) -> None:
+def configure_pd(pd):
     """
     Configures pandas for nice display in Jupyter notebooks.
 
@@ -24,22 +22,23 @@ def configure_pd(pd: ModuleType) -> None:
     pd.options.display.max_colwidth = 500
     pd.options.display.width = 100
 
+
 # pyplot configuration
 
 dark_blue = (0.04, 0.31, 0.59)
 dark_red = (0.75, 0.10, 0.10)
-dark_purple = (.4, .21, .35)  # midpoint of dark_blue and dark_red
+dark_purple = (0.4, 0.21, 0.35)  # midpoint of dark_blue and dark_red
 
 col_list = [dark_blue, dark_red, 'forestgreen', 'goldenrod', 'purple', 'coral',
             'deeppink', 'lightskyblue', 'mistyrose', 'palegreen', 'navajowhite']
 
 
-def configure_plt(plt: ModuleType, figsc: float = 1.) -> None:
+def configure_plt(plt_input, figsc: float = 1.):
     """
     Sets pyplot rcParams for attractive output.
 
     Args:
-        plt: an instance of the matplotlib.pyplot module
+        plt_input: an instance of the matplotlib.pyplot module
         figsc (optional): a scale factor for making output images larger or smaller
 
     Returns:
@@ -57,7 +56,7 @@ def configure_plt(plt: ModuleType, figsc: float = 1.) -> None:
                    'lines.linewidth': 2.5,
                    'mathtext.default': 'regular'}
 
-    plt.rcParams.update(plt_options)
+    plt_input.rcParams.update(plt_options)
 
 
 # Other useful functions
